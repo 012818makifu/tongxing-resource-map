@@ -157,7 +157,7 @@ function resourcesFor(c, d) {
     "臺中市":"臺中市食物銀行一期 6 個月，到期仍有需要可再延長一期，原則上最多一年；向居住地所轄分店申請。",
     "金門縣":"金門縣社會處提供突遭失業或變故家庭即時或短期物資，據點資料可在政府資料開放平臺查詢。",
     "澎湖縣":"澎湖縣實物銀行提供營養品、尿布、清潔用品等民生物資。"};
-  const FB_URL = {"高雄市":"https://www.nownews.com/news/6846352","桃園市":"https://news.pts.org.tw/article/614267","臺中市":"https://eservices.taichung.gov.tw/Common/CaseFormDownload?pkid=30659","金門縣":"https://data.gov.tw/dataset/176016"};
+  const FB_URL = {"雲林縣":"https://social.yunlin.gov.tw/News_Content.aspx?n=737&s=539844","高雄市":"https://www.nownews.com/news/6846352","桃園市":"https://news.pts.org.tw/article/614267","臺中市":"https://eservices.taichung.gov.tw/Common/CaseFormDownload?pkid=30659","金門縣":"https://data.gov.tw/dataset/176016"};
   add({cat:"food", scope:"全縣市",
     name:`${c}實（食）物銀行`, url: FB_URL[c] || GOV[c],
     area:`${c}社會局（處）、社福中心與${d}公所等發放據點`, item:"米、食材、生鮮與民生用品（依各地庫存）",
