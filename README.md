@@ -2,7 +2,7 @@
 臺灣兒少餐食、衣物與學習資源查詢。首頁支援自然語言，亦可用原有的分類、關鍵字與行政區地圖。
 ## 部署
 Vercel 專案從 main 部署，建置指令為 npm run build。使用 Node.js 22 以上。
-- ANTHROPIC_API_KEY 用於公開查詢與管理者更新。CHILD_MAP_MODEL 可覆寫預設 claude-haiku-5-5。
+- ANTHROPIC_API_KEY 用於公開查詢與管理者更新。若金鑰未限定工作區，另設 ANTHROPIC_WORKSPACE_ID（wrkspc_ 開頭）。CHILD_MAP_MODEL 可覆寫預設 claude-haiku-5-5。
 - CHILD_MAP_ADMIN_PASSWORD 限制行政區更新。每次只處理選定行政區，逐筆顯示比對結果。
 - 連結一個 private Vercel Blob store，讓 BLOB_READ_WRITE_TOKEN 自動注入。更新結果會寫入共同資料，訪客重新載入可看到已發布的異動。
 - public/index.html 首頁底部有網站教學影片及預留的 YouTube 位置。將 public/media/guide.mp4 上傳到自己的頻道後，可在該處貼上影片超連結。
