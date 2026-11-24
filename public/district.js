@@ -50,10 +50,10 @@
         line.textContent=r.name+"｜"+(out.message||out.error||"本筆查詢失敗");
         el("updateLog").append(line);
         done++; if(!response.ok) errors++; else if(out.state==="updated")updated++;else if(out.state==="skipped")skipped++;
-        if(!response.ok && done===1) throw Error(out.error||"更新服務無法連線");
+
       }
       el("progress").textContent="已檢查 "+done+" 筆。取得可比對資料 "+(done-skipped-errors)+" 筆，其中更新 "+updated+" 筆。未能核對 "+skipped+" 筆，執行失敗 "+errors+" 筆。";
-    }catch(e){el("progress").textContent=e.message+"（已處理 "+done+" 筆）";}
+    }catch(e){el("progress").textContent="更新中斷。已確認更新 "+updated+" 筆，尚有 "+(rows.length-done)+" 筆未取得結果。"+e.message;}
     finally{controls.forEach(id=>el(id).disabled=false);await reload().catch(()=>{});}
   };
 })();

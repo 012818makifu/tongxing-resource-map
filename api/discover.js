@@ -9,11 +9,14 @@ export default async function handler(req,res){
   const {county,town}=req.body||{},towns=globalThis.tongxingCatalog.TOWNS;
   if(!Object.hasOwn(towns,county)||!towns[county].includes(town))return res.status(400).json({error:"查無行政區"});
   if(!process.env.BLOB_READ_WRITE_TOKEN)return res.status(503).json({error:"資料庫尚未連結"});
+  let step="讀取上次紀錄";
   try{
     const id=JSON.stringify([county,town]),day=searchDay(),old=(await readUpdates()).records[id];
     if(old?.digest===day)return res.json({message:"今天已搜尋，沿用 "+old.links.length+" 筆公告線索。"});
+    step="搜尋最新公告";
     const links=await districtNotices(county,town);
+    step="儲存公告線索";
     await writeUpdate(id,old?.digest||"",{digest:day,links});
     return res.json({message:"找到 "+links.length+" 筆地區公告線索。"});
-  }catch(e){return res.status(503).json({error:"最新公告搜尋未完成，保留上次結果。"});}
+  }catch(e){return res.status(503).json({error:step+"未完成，本次未發布新線索。"});}
 }
