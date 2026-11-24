@@ -23,5 +23,5 @@ export default async function handler(req,res) {
     const text=message.replace(/[A-Z][12]\d{8}|09\d{2}[- ]?\d{3}[- ]?\d{3}|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/gi,"［略］");
     const filters=await askClaude({system:"理解臺灣兒少福利查詢並擷取已表明條件。留意否定，不推定福利身分。五專前三年對應高中。無關、未知填空值。food 餐食，cloth 衣物，edu 學習。",data:text,name:"find_resources",properties:fields,required:Object.keys(fields),maxTokens:240});
     return res.json({filters});
-  } catch(e) {return res.status(503).json({error:e.message.startsWith("網站")?e.message:"AI 暫時無法連線，可以先自行勾選條件。"});}
+  } catch(e) {return res.status(503).json({error:/^(網站|Claude|此 Claude)/.test(e.message)?e.message:"AI 暫時無法連線，可以先自行勾選條件。"});}
 }
