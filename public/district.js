@@ -34,7 +34,7 @@
     const controls=["uc","ud","refreshDistrict","adminPass"];
     controls.forEach(id=>el(id).disabled=true);
     el("updateLog").replaceChildren();
-    let done=0,updated=0,skipped=0,errors=0;
+    let done=0,updated=0,compared=0,skipped=0,errors=0;
     try{
       el("progress").textContent="正在搜尋 "+c+d+" 的政府與學校最新公告…";
       const first=await fetch("/api/discover",{method:"POST",headers:{"Content-Type":"application/json","x-map-password":pass},body:JSON.stringify({county:c,town:d}),signal:AbortSignal.timeout(61000)});
@@ -49,10 +49,11 @@
         const line=document.createElement("li");
         line.textContent=r.name+"｜"+(out.message||out.error||"本筆查詢失敗");
         el("updateLog").append(line);
+        if(out.compared || out.state==="same" || out.state==="updated") compared++;
         done++; if(!response.ok) errors++; else if(out.state==="updated")updated++;else if(out.state==="skipped")skipped++;
 
       }
-      el("progress").textContent="已檢查 "+done+" 筆。取得可比對資料 "+(done-skipped-errors)+" 筆，其中更新 "+updated+" 筆。未能核對 "+skipped+" 筆，執行失敗 "+errors+" 筆。";
+      el("progress").textContent="已檢查 "+done+" 筆資源，完成比對 "+compared+" 筆，已發布變更 "+updated+" 筆。略過 "+skipped+" 筆。"+(errors?"另有 "+errors+" 筆發生錯誤，詳見下方各筆結果。":"");
     }catch(e){el("progress").textContent="更新中斷。已確認更新 "+updated+" 筆，尚有 "+(rows.length-done)+" 筆未取得結果。"+e.message;}
     finally{controls.forEach(id=>el(id).disabled=false);await reload().catch(()=>{});}
   };
