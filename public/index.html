@@ -323,7 +323,11 @@ html.big .lbl{font-size:12px}
     <div class="note">
       <p>資料整理日期：2026 年 10 月 19 日。資料來自政府計畫文件、基金會公告與新聞報導，由 AI 協助蒐集、經人工整理與查核；各計畫的金額、時間與條件可能調整，申請前請以各單位最新公告為準。</p>
       <p>孩子遇到受虐、疏忽照顧或緊急危險，請撥 113 保護專線或 110。</p>
-    </div><footer><button type="button" class="linkbtn" id="openUpdates">管理者・更新行政區資料</button></footer>
+    </div><section class="giveband" aria-labelledby="reportTitle">
+      <div class="give-txt"><h2 id="reportTitle">通報資源資訊</h2>
+      <p>發現電話打不通、服務時間改了，或知道地圖還沒收錄的資源？請寫下地區、資源名稱與更動內容，有公告連結也可以附上。通報由管理者查核後更新。</p></div>
+      <div><a id="communityReport" class="linkbtn" href="https://docs.google.com/forms/d/e/1FAIpQLSf7qdbk5sgIB1c3SIlxynhLP_B_OvJPl2ts-bfEv0Rp7M4fLQ/viewform" target="_blank" rel="noopener">填寫 Google 通報表單 ↗</a></div>
+    </section><footer><button type="button" class="linkbtn" id="openUpdates">管理者・更新行政區資料</button></footer>
   </section>
 
 <section id="updates" hidden>
@@ -1052,12 +1056,15 @@ $("#sc").addEventListener("change", () => {
 // ===================== 查證日期與回報 =====================
 const STALE_DAYS = 180;
 function metaRow(checked, name, place) {
+  const report = new URL(document.getElementById("communityReport").href);
+  report.searchParams.set("usp", "pp_url");
+  report.searchParams.set("entry.1557420584", place ? `${name}（${place}）` : name);
   const d = new Date(checked + "T00:00:00+08:00");
   const days = Math.floor((Date.now() - d) / 86400000);
   const label = checked.replace(/-/g, "/");
   return `<div class="meta"><span>最後查證：${label}</span>` +
     (days > STALE_DAYS ? `<span class="stale">已超過半年未更新，資訊可能已過時，請先向單位確認</span>` : "") +
-    "</div>";
+    `<a class="linkbtn" href="${esc(report.href)}" target="_blank" rel="noopener">通報這筆資料 ↗</a></div>`;
 }
 document.addEventListener("click", ev => {
   const o = ev.target.closest("[data-open='help']"); if (o) { openHelp(o.dataset.sec); return; }
