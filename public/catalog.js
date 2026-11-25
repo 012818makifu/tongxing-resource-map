@@ -77,6 +77,13 @@ const BOYO_AREAS = {"新竹縣":["竹東鎮","橫山鄉","尖石鄉","五峰鄉"
 
 // ===================== 資源規則 =====================
 // 每一筆：cat(food/cloth/edu)、name、url、scope、area、item、who、how（食、衣才有）、time、note、src
+const UNIFORM_SCHOOLS = {
+  "文山區":["木柵高工","https://www.mcvs.tp.edu.tw/content?a=T0RESU1UZzBNRFkwTmpNPXdnRE13Y3pOeDRrVGludGVseQ%3D%3DT0RESU1UZzBNRFkwTmpNPXdnRE13Y3pOeDRrVGludGVseQ%3D%3D&cat=T0RESTAzNDQyMzAzNzIzODI2MVRDaW50ZWx5"],
+  "士林區":["陽明高中","https://www.ymsh.tp.edu.tw/news/【學務處】二手制服回收捐贈及循環運用機制說明/"],
+  "內湖區":["麗山高中","https://www.lssh.tp.edu.tw/news/二手制服回收捐贈及循環運用機制說明/"],
+  "中正區":["北一女中","https://www.fg.tp.edu.tw/office/div_500/section_520/二手制服回收捐贈及循環運用機制說明/"]
+};
+
 // One official source can serve many towns. Match the most specific jurisdiction first.
 function sourcedResource(c,d,r) {
   const source=(url,src,...sourceTerms)=>({...r,url,src,sourceTerms});
@@ -265,10 +272,13 @@ function resourcesFor(c, d) {
   add({cat:"food",scope:"全國",name:"安得烈食物銀行｜兒少食物箱",url:"https://www.chaca.org.tw/OnePage.aspx?tid=190",
     src:"安得烈慈善協會",sourceTerms:["膳糧食物箱","嬰兒物資箱"],area:"全臺，依協會個案評估",who:"15 歲以下、家庭生活困難的兒少",
     item:"依年齡與需要提供嬰兒物資或兒少食物箱。",how:"向安得烈慈善協會洽詢，由協會了解家庭需求。",time:"按月提供，受助時間依個案安排。",checked:"2026-11-25"});
-  if(c==="臺北市" && d==="文山區") add({cat:"cloth",scope:"本區",name:"木柵高工二手制服借用與領用",
-    url:"https://www.mcvs.tp.edu.tw/content?a=T0RESU1UZzBNRFkwTmpNPXdnRE13Y3pOeDRrVGludGVseQ%3D%3DT0RESU1UZzBNRFkwTmpNPXdnRE13Y3pOeDRrVGludGVseQ%3D%3D&cat=T0RESTAzNDQyMzAzNzIzODI2MVRDaW50ZWx5",
-    src:"木柵高工學務處",sourceTerms:["制服借用及領用對象","二手制服"],area:"臺北市文山區木柵高工",who:"木柵高工學生，有實際需要者可經評估長期領用。",
-    item:"二手制服",how:"向木柵高工學務處詢問尺寸、借用或領用。",time:"依學校庫存與受理時間。",checked:"2026-11-25"});
+  if(c==="臺北市" && Object.hasOwn(UNIFORM_SCHOOLS,d)) {
+    const [school,url]=UNIFORM_SCHOOLS[d];
+    add({cat:"cloth",scope:"本區",name:school+"二手制服借用與領用",url,
+      src:school+"學務處",sourceTerms:["制服借用及領用對象","二手制服"],area:c+d+school,
+      who:school+"在校學生，借用及領用條件依該校公告。",item:"二手制服",
+      how:"向該校學務處詢問尺寸、庫存與辦理方式。",time:"依學校受理時間。",checked:"2026-11-25"});
+  }
   return R.map(row => {
     const r=sourcedResource(c,d,row);
     return tagResource(globalThis.reviewedResource?.(c,d,r) || r);
@@ -280,7 +290,7 @@ function resourcesFor(c, d) {
 const WEEK = ["週一","週二","週三","週四","週五"];
 const TAG_RULES = [
  ["安得烈食物銀行", {type:["食材","民生用品"],age:["18歲以下"],status:["經濟弱勢"],method:["需申請"]}],
- ["木柵高工", {type:["制服","二手","衣物"],age:["高中"],method:["學校"],group:"district"}],
+ ["二手制服借用與領用", {type:["制服","二手","衣物"],age:["高中"],method:["學校"],group:"district"}],
  ["選新衣", {type:["衣物","新衣"], age:["18歲以下"], status:["經濟弱勢"], time:["寒假"], price:["免費"], method:["現場","需申請"]}],
  ["遺族子女制服費", {type:["制服","補助"], age:["國小","國中","高中"], status:["遺族"], time:["學期中"], price:["免費"], method:["學校","需申請"]}],
  ["幸福保衛站", {type:["緊急餐點","餐點","早餐","午餐","晚餐"], age:["18歲以下"], status:["ANY","急難"], time:["24小時"], price:["免費"], method:["超商","現場"]}],
