@@ -5,6 +5,8 @@ https://aistudio.google.com/prompts/new_chat
 https://talking-agent-lake.vercel.app/
 - 本網站的前身
 https://astonishing-sunburst-c57be3.netlify.app/
+- 網頁居住的家
+https://vercel.com/m-0291/tongxing-resource-map
 
 # 童行資源地圖
 臺灣兒少餐食、衣物與學習資源查詢。首頁支援自然語言，亦可用原有的分類、關鍵字與行政區地圖。
