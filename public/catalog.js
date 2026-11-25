@@ -77,6 +77,27 @@ const BOYO_AREAS = {"新竹縣":["竹東鎮","橫山鄉","尖石鄉","五峰鄉"
 
 // ===================== 資源規則 =====================
 // 每一筆：cat(food/cloth/edu)、name、url、scope、area、item、who、how（食、衣才有）、time、note、src
+// One official source can serve many towns. Match the most specific jurisdiction first.
+function sourcedResource(c,d,r) {
+  const source=(url,src,...sourceTerms)=>({...r,url,src,sourceTerms});
+  if(r.name===c+"實（食）物銀行") return {
+    ...source("https://dep.mohw.gov.tw/dosaasw/cp-569-61374-103.html","衛福部社會救助及社工司","申請"),
+    bankCounty:c,how:"開啟衛福部窗口名錄，找到"+c+"的「申請物資」電話，向該窗口詢問轉介與領取方式。"
+  };
+  if(r.name.startsWith("1919 食物銀行")) return {...source("https://1919.org.tw/foodbank/","中華基督教救助協會","1919食物銀行","1919 食物銀行","食物包"),item:"食物包及民生物資，內容依協會安排。"};
+  if(r.name==="經濟弱勢學生午餐費補助") return c==="臺北市"
+    ? source("https://www.doe.gov.taipei/News_Content.aspx?n=FDDC0C0019D7F096&s=301C831BE5E46E5F&sms=87415A8B9CE81B16","臺北市政府教育局","清寒午餐補助")
+    : source("https://edu.law.moe.gov.tw/LawContent.aspx?id=GL000325","教育部主管法規共用系統（中央經費規定，各校受理）","貧困學生");
+  if(r.name.startsWith("軍公教遺族子女")) return {...source("https://edu.law.moe.gov.tw/LawContent.aspx?id=FL008422","教育部主管法規共用系統","制服費"),item:"公費優待項目含制服費，實際金額與受理方式請向就讀學校確認。"};
+  if(r.name.startsWith("學習扶助")) return source("https://edu.law.moe.gov.tw/LawContent.aspx?id=GL001664","教育部國民及學前教育署","學生學習扶助","學習扶助");
+  if(r.name.startsWith("幸福保衛站")) return source("https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=B3E8F2D6CCE46A99","臺北市政府教育局（北臺八縣市計畫）","幸福保衛站");
+  if(c==="雲林縣" && r.name.includes("幸福飽胃站")) return source("https://tnajh.ylc.edu.tw/cp.aspx?n=124239","雲林縣東南國中彙整之縣級公告","幸福飽胃站");
+  if(c==="臺北市" && r.name.startsWith("NET")) return {...source("https://www.ccf.org.tw/56/news/ODQ1OQ/detail","台北家扶中心","NET愛心穿新衣"),archiveOnly:true,time:"2026 年 1 月 24 日活動已結束。下次辦理時間待家扶公告。",item:"受邀家庭於封館活動挑選新衣。"};
+  if(r.name==="台北家扶中心（家扶基金會）") return source("https://www.ccf.org.tw/56/service/ODA5","台北家扶中心（經濟扶助申請）","我需要申請經濟扶助");
+  if(c==="臺北市" && r.name.endsWith("公共圖書館")) return {...source("https://tpml.gov.taipei/cp.aspx?n=1F9AED300D314011","臺北市立圖書館",d),libraryDistrict:d,urlLabel:"查看分館名錄",area:d+"各分館，地址及設施請見北市圖名錄。"};
+  return r;
+}
+
 function resourcesFor(c, d) {
   const R = [];
   const add = o => R.push(o);
@@ -241,13 +262,25 @@ function resourcesFor(c, d) {
     item:"免費課業輔導（以英文、數學為主），並由社工關懷家庭與生活狀況",
     who:"經濟弱勢家庭的國中、國小學童", time:"請自行查詢", src:"博幼基金會服務範圍資料"});
 
-  return R.map(r => tagResource(globalThis.reviewedResource?.(c, d, r) || r));
+  add({cat:"food",scope:"全國",name:"安得烈食物銀行｜兒少食物箱",url:"https://www.chaca.org.tw/OnePage.aspx?tid=190",
+    src:"安得烈慈善協會",sourceTerms:["膳糧食物箱","嬰兒物資箱"],area:"全臺，依協會個案評估",who:"15 歲以下、家庭生活困難的兒少",
+    item:"依年齡與需要提供嬰兒物資或兒少食物箱。",how:"向安得烈慈善協會洽詢，由協會了解家庭需求。",time:"按月提供，受助時間依個案安排。",checked:"2026-11-25"});
+  if(c==="臺北市" && d==="文山區") add({cat:"cloth",scope:"本區",name:"木柵高工二手制服借用與領用",
+    url:"https://www.mcvs.tp.edu.tw/content?a=T0RESU1UZzBNRFkwTmpNPXdnRE13Y3pOeDRrVGludGVseQ%3D%3DT0RESU1UZzBNRFkwTmpNPXdnRE13Y3pOeDRrVGludGVseQ%3D%3D&cat=T0RESTAzNDQyMzAzNzIzODI2MVRDaW50ZWx5",
+    src:"木柵高工學務處",sourceTerms:["制服借用及領用對象","二手制服"],area:"臺北市文山區木柵高工",who:"木柵高工學生，有實際需要者可經評估長期領用。",
+    item:"二手制服",how:"向木柵高工學務處詢問尺寸、借用或領用。",time:"依學校庫存與受理時間。",checked:"2026-11-25"});
+  return R.map(row => {
+    const r=sourcedResource(c,d,row);
+    return tagResource(globalThis.reviewedResource?.(c,d,r) || r);
+  });
 }
 
 // ===================== 標籤 =====================
 // 維度：type 類型、age 年齡學層、status 身分、time 時間、price 費用、method 方式。ANY＝不限。
 const WEEK = ["週一","週二","週三","週四","週五"];
 const TAG_RULES = [
+ ["安得烈食物銀行", {type:["食材","民生用品"],age:["18歲以下"],status:["經濟弱勢"],method:["需申請"]}],
+ ["木柵高工", {type:["制服","二手","衣物"],age:["高中"],method:["學校"],group:"district"}],
  ["選新衣", {type:["衣物","新衣"], age:["18歲以下"], status:["經濟弱勢"], time:["寒假"], price:["免費"], method:["現場","需申請"]}],
  ["遺族子女制服費", {type:["制服","補助"], age:["國小","國中","高中"], status:["遺族"], time:["學期中"], price:["免費"], method:["學校","需申請"]}],
  ["幸福保衛站", {type:["緊急餐點","餐點","早餐","午餐","晚餐"], age:["18歲以下"], status:["ANY","急難"], time:["24小時"], price:["免費"], method:["超商","現場"]}],
