@@ -335,6 +335,7 @@ html.big .lbl{font-size:12px}
   <div class="maint"><p>選定行政區後，系統會搜尋當地的政府與學校公告（同區當天已搜尋便沿用結果），再逐筆重讀已收錄的來源，核對服務內容、時間、資格與領取方式。只有能對回公告原文的變更才會發布。</p>
   <div class="controls"><label>縣市<select id="uc"></select></label><label>行政區<select id="ud"></select></label><label>管理密碼<input type="password" id="adminPass" autocomplete="current-password"></label></div>
   <button class="cta" type="button" id="refreshDistrict">更新這個行政區</button><p id="progress" role="status"></p><ul id="updateLog"></ul></div>
+  <footer><small>專案管理　<a href="https://github.com/012818makifu/tongxing-resource-map" target="_blank" rel="noopener">GitHub 原始碼 ↗</a>　·　<a href="https://vercel.com/m-0291/tongxing-resource-map" target="_blank" rel="noopener">Vercel 部署 ↗</a></small></footer>
 </section>
 <!-- 地圖頁 -->
   <section id="explore" hidden>
@@ -1189,5 +1190,10 @@ $("#goSos").addEventListener("click", openSos);
 
 <script src="/agent.js"></script>
 <script src="/district.js"></script>
+<script>
+if (new URLSearchParams(location.search).get("view") === "updates") {
+  document.getElementById("openUpdates").click();
+}
+</script>
 </body>
 </html>
