@@ -1,3 +1,11 @@
+# 關聯網址
+- google ai studio 影片製作
+https://aistudio.google.com/prompts/new_chat
+- 傳說中的小法_ai法律代理人
+https://talking-agent-lake.vercel.app/
+- 本網站的前身
+https://astonishing-sunburst-c57be3.netlify.app/
+
 # 童行資源地圖
 臺灣兒少餐食、衣物與學習資源查詢。首頁支援自然語言，亦可用原有的分類、關鍵字與行政區地圖。
 ## 部署
