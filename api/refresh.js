@@ -42,5 +42,5 @@ export default async function handler(req,res) {
     step="儲存核對結果";
     await writeUpdate(key,old?.digest||"",next);
     return res.json({state:count?"updated":"same",message:count?"已發布 "+count+" 個欄位":"沒有可確認的變更"});
-  } catch {return res.status(503).json({error:step+"未完成，本筆未確認更新。"});}
+  } catch {return res.status(503).json({compared:step==="儲存核對結果",error:step==="儲存核對結果"?"已完成比對，但儲存失敗，本筆未發布。":step+"未完成，本筆未確認更新。"});}
 }
