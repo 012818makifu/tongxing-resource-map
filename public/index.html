@@ -377,6 +377,12 @@ if (glassStyle === "riverside" || glassStyle === "mist") {
   palette.rel = "stylesheet";
   palette.href = glassStyle === "mist" ? "/mist.css" : "/riverside.css";
   document.head.append(palette);
+  if (glassStyle === "mist") {
+    const panels = document.createElement("link");
+    panels.rel = "stylesheet";
+    panels.href = "/mist-panels.css";
+    document.head.append(panels);
+  }
 }
 </script>
 <style>
