@@ -365,6 +365,13 @@ if (new URLSearchParams(location.search).get("palette") === "waterlily") {
 </style>
 <script>
 const glassStyle = new URLSearchParams(location.search).get("palette");
+if (glassStyle === "mist") {
+  document.documentElement.dataset.typeface = "ming";
+  const font = document.createElement("link");
+  font.rel = "stylesheet";
+  font.href = "https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&display=swap";
+  document.head.append(font);
+}
 if (glassStyle === "riverside" || glassStyle === "mist") {
   const palette = document.createElement("link");
   palette.rel = "stylesheet";
@@ -372,6 +379,17 @@ if (glassStyle === "riverside" || glassStyle === "mist") {
   document.head.append(palette);
 }
 </script>
+<style>
+[data-typeface="ming"] #home {
+  --book-serif:"Source Han Serif TC","Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-family:var(--book-serif); line-height:1.8;
+}
+[data-typeface="ming"] #home :is(button,input,h1,h2,h3,.entry b),
+[data-typeface="ming"] body:has(#home:not([hidden])) .brand {font-family:"Source Han Serif TC","Noto Serif TC","Songti TC","PMingLiU",serif}
+[data-typeface="ming"] #home :is(h1,h2,h3,.entry b),
+[data-typeface="ming"] body:has(#home:not([hidden])) .brand {font-weight:900;line-height:1.32}
+[data-typeface="ming"] #home p {line-height:1.85}
+</style>
 </head>
 <body>
 <div class="wrap">
