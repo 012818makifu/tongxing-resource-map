@@ -278,6 +278,7 @@ html.big .lbl{font-size:12px}
 
 <link rel="stylesheet" href="/garden.css">
 <script>
+if (new URLSearchParams(location.search).get("palette") === "sunrise") document.documentElement.dataset.palette = "sunrise";
 if (new URLSearchParams(location.search).get("palette") === "waterlily") {
   document.documentElement.dataset.palette = "waterlily";
 }
@@ -325,6 +326,42 @@ if (new URLSearchParams(location.search).get("palette") === "waterlily") {
   --wash-base:#285650; --wash-light:#47725dab; --wash-mid:#316f72cf; --wash-edge:#493e69bf;
   color:white;
 }
+
+[data-palette="sunrise"] body:has(#home:not([hidden])) {
+  background:radial-gradient(ellipse at 2% 22%,#ecdae9 0,transparent 54%),linear-gradient(155deg,#f4ece6,#fff4e9 52%,#e6e5f0);
+}
+[data-palette="sunrise"] #home {
+  --ink:#39364f; --muted:#5c5368; --accent:#584775; --line:#d6c4d2;
+  --food:#a5532d; --cloth:#975778; --edu:#555f96; color:var(--ink);
+}
+[data-palette="sunrise"] #home .hero {
+  --veil:linear-gradient(94deg,#fcf2ebfa 8%,#f9e7e8e8 35%,transparent 67%);
+  background-image:var(--veil),linear-gradient(162deg,#b9aad4 0%,#e8a7ba 37%,#ffbd88 52%,#8589bd 82%),url('/media/pond.webp');
+  background-blend-mode:normal,color,normal; background-size:cover; background-position:center,center,center 55%; border-color:#c4a9bc;
+}
+[data-palette="sunrise"] #home .hero h1 {color:#423b61}
+[data-palette="sunrise"] #home .hero :is(p,.eyebrow) {color:#564863}
+[data-palette="sunrise"] #home .ask {border-color:#cba8b4;background:#fffaf6}
+[data-palette="sunrise"] #home .ask button {background:linear-gradient(125deg,#80506a,#4d5180);color:white}
+[data-palette="sunrise"] #home .entry {--sky:#ffe5c5;--haze:#e8afbf;--water:#bba5cd}
+[data-palette="sunrise"] #home .entry:nth-child(2) {--sky:#f1daeb;--haze:#b4badf;--water:#929dcd}
+[data-palette="sunrise"] #home .entry.sos {--sky:#ffe0b8;--haze:#f2b3a1;--water:#cc9bad}
+[data-palette="sunrise"] #home .entries .entry {
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='142' height='88'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.065 .38' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath d='M0 0h142v88H0z' filter='url(%23p)' opacity='.17'/%3E%3C/svg%3E"),radial-gradient(ellipse at 12% 12%,var(--sky),transparent 68%),linear-gradient(151deg,var(--haze) 38%,var(--water));
+  border-color:#bba3b8;color:#39354d;
+}
+[data-palette="sunrise"] #home .cat:nth-child(1){background:#fae8d5}
+[data-palette="sunrise"] #home .cat:nth-child(2){background:#f3e0e9}
+[data-palette="sunrise"] #home .cat:nth-child(3){background:#e5e6f5}
+[data-palette="sunrise"] #home .giveband {padding:clamp(18px,3vw,32px);border-radius:16px;background:#f0e4ec}
+[data-palette="sunrise"] #home [aria-labelledby="giveTitle"] {
+  background:radial-gradient(ellipse at 8% 0%,#80566f,transparent 64%),linear-gradient(120deg,#614d76,#454e78 72%,#535978);
+  color:white;border:1px solid #645679;
+}
+[data-palette="sunrise"] #home [aria-labelledby="giveTitle"] :is(h2,p,.eyebrow,b,span){color:white}
+[data-palette="sunrise"] #home .way {background:#ffffff12;border:1px solid #c5b4cf;border-radius:12px}
+[data-palette="sunrise"] #home .way:hover {background:#ffffff24}
+@media(max-width:680px){[data-palette="sunrise"] #home .hero {--veil:linear-gradient(0deg,#fbefeef5 34%,#f9e7e8da 56%,transparent 89%)}}
 </style>
 </head>
 <body>
