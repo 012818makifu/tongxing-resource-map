@@ -277,6 +277,32 @@ html.big .lbl{font-size:12px}
 </style>
 
 <link rel="stylesheet" href="/garden.css">
+<script>
+if (new URLSearchParams(location.search).get("palette") === "waterlily") {
+  document.documentElement.dataset.palette = "waterlily";
+}
+</script>
+<style>
+:root[data-palette="waterlily"]:root {
+  --ink:#203d43; --muted:#495c63; --line:#b6c9c7; --accent:#24645d;
+  --accent-soft:#cde8df; --bg:#faf7ee; --surface:#fffdf6;
+  --map0:#b1d9c6; --map1:#78b5b3; --map2:#7196b6; --map-hover:#806798;
+  --food:#95601f; --cloth:#814d70; --edu:#356a56;
+}
+[data-palette="waterlily"] body {
+  background:radial-gradient(ellipse at 2% 24%,#dfd2edaa,transparent 48%),
+    radial-gradient(ellipse at 98% 58%,#bbe0d7aa,transparent 50%),var(--bg);
+}
+[data-palette="waterlily"] .hero h1 {color:#204f49}
+[data-palette="waterlily"] .ask button {background:#24645d}
+[data-palette="waterlily"] .entry {background:linear-gradient(115deg,#c4e5d5,#e0efdb);border-color:#8dbba7}
+[data-palette="waterlily"] .entry:nth-child(2) {background:linear-gradient(115deg,#c9d9ea,#e0d7ed);border-color:#a4b0c9}
+[data-palette="waterlily"] .entry.sos {background:linear-gradient(115deg,#efd1d3,#f4e2d8);border-color:#cea6a9}
+[data-palette="waterlily"] .cat:nth-child(1) {background:#f7e9ca}
+[data-palette="waterlily"] .cat:nth-child(2) {background:#eee1ef}
+[data-palette="waterlily"] .cat:nth-child(3) {background:#dcecdf}
+[data-palette="waterlily"] .giveband {background:linear-gradient(110deg,#cbe4d6,#e0ebdc 60%,#d6e5e9)}
+</style>
 </head>
 <body>
 <div class="wrap">
