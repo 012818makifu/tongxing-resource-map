@@ -364,10 +364,11 @@ if (new URLSearchParams(location.search).get("palette") === "waterlily") {
 @media(max-width:680px){[data-palette="sunrise"] #home .hero {--veil:linear-gradient(0deg,#fbefeef5 34%,#f9e7e8da 56%,transparent 89%)}}
 </style>
 <script>
-if (new URLSearchParams(location.search).get("palette") === "riverside") {
+const glassStyle = new URLSearchParams(location.search).get("palette");
+if (glassStyle === "riverside" || glassStyle === "mist") {
   const palette = document.createElement("link");
   palette.rel = "stylesheet";
-  palette.href = "/riverside.css";
+  palette.href = glassStyle === "mist" ? "/mist.css" : "/riverside.css";
   document.head.append(palette);
 }
 </script>
