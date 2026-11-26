@@ -363,6 +363,14 @@ if (new URLSearchParams(location.search).get("palette") === "waterlily") {
 [data-palette="sunrise"] #home .way:hover {background:#ffffff24}
 @media(max-width:680px){[data-palette="sunrise"] #home .hero {--veil:linear-gradient(0deg,#fbefeef5 34%,#f9e7e8da 56%,transparent 89%)}}
 </style>
+<script>
+if (new URLSearchParams(location.search).get("palette") === "riverside") {
+  const palette = document.createElement("link");
+  palette.rel = "stylesheet";
+  palette.href = "/riverside.css";
+  document.head.append(palette);
+}
+</script>
 </head>
 <body>
 <div class="wrap">
