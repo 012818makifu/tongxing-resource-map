@@ -390,6 +390,25 @@ if (glassStyle === "riverside" || glassStyle === "mist") {
 [data-typeface="ming"] body:has(#home:not([hidden])) .brand {font-weight:900;line-height:1.32}
 [data-typeface="ming"] #home p {line-height:1.85}
 </style>
+<style>
+[data-typeface="ming"] body:has(#quiz:not([hidden])) {--accent:#38665a;--accent-soft:#d9eee2;--bg:#edf4ef;--line:color-mix(in srgb,var(--accent) 32%,white);background:radial-gradient(ellipse at top left,var(--accent-soft),transparent 64%),var(--bg)}
+[data-typeface="ming"] body:has(#explore:not([hidden])) {--accent:#305879;--accent-soft:#d7e7f4;--bg:#e6edf5;--line:color-mix(in srgb,var(--accent) 32%,white);background:radial-gradient(ellipse at top left,var(--accent-soft),transparent 64%),var(--bg)}
+[data-typeface="ming"] body:has(#sos:not([hidden])) {--accent:#853f42;--accent-soft:#f4dada;--bg:#f7eae3;--line:color-mix(in srgb,var(--accent) 32%,white);background:radial-gradient(ellipse at top left,var(--accent-soft),transparent 64%),var(--bg)}
+[data-typeface="ming"] body:has(#help[data-topic="h-money"]:not([hidden])) {--accent:#805a24;--accent-soft:#f4e4bd;--bg:#f8f1df;--line:color-mix(in srgb,var(--accent) 32%,white);background:radial-gradient(ellipse at top left,var(--accent-soft),transparent 64%),var(--bg)}
+[data-typeface="ming"] body:has(#help[data-topic="h-vol"]:not([hidden])) {--accent:#614f80;--accent-soft:#e6dcf1;--bg:#f1edf6;--line:color-mix(in srgb,var(--accent) 32%,white);background:radial-gradient(ellipse at top left,var(--accent-soft),transparent 64%),var(--bg)}
+[data-typeface="ming"] body:has(#help[data-topic="h-goods"]:not([hidden])) {--accent:#386772;--accent-soft:#d6e9e8;--bg:#e9f3f2;--line:color-mix(in srgb,var(--accent) 32%,white);background:radial-gradient(ellipse at top left,var(--accent-soft),transparent 64%),var(--bg)}
+[data-typeface="ming"] :is(#quiz,#explore,#sos,#help) .bar{padding:18px 22px;border-radius:14px;background:linear-gradient(115deg,var(--accent-soft),var(--bg));border-inline-start:4px solid var(--accent)}
+[data-typeface="ming"] :is(#quiz,#explore,#sos,#help) h2,[data-typeface="ming"] #help .hsec h3{color:var(--accent)}
+[data-typeface="ming"] #quiz .ask button{background:var(--accent)}
+[data-typeface="ming"] #explore{--map0:#cbdfea;--map1:#9abfd3;--map2:#7195b5;--map-hover:#55648c}
+[data-typeface="ming"] #help #h-goods{--accent:#386772}
+[data-typeface="ming"] #help #h-money{--accent:#805a24}
+[data-typeface="ming"] #help #h-vol{--accent:#614f80}
+[data-typeface="ming"] #help :is(#h-goods,#h-money,#h-vol){border-top:3px solid var(--accent);padding-top:16px}
+[data-typeface="ming"] #home .give-ways .way[data-sec="h-goods"]{background:#477e8699}
+[data-typeface="ming"] #home .give-ways .way[data-sec="h-money"]{background:#806138aa}
+[data-typeface="ming"] #home .give-ways .way[data-sec="h-vol"]{background:#77638999}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1182,7 +1201,7 @@ function metaRow(checked, name, place) {
 }
 document.addEventListener("click", ev => {
   const o = ev.target.closest("[data-open='help']"); if (o) { openHelp(o.dataset.sec); return; }
-  const j = ev.target.closest("[data-jump]"); if (j) { const t = document.getElementById(j.dataset.jump); if (t) t.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
+  const j = ev.target.closest("[data-jump]"); if (j) { $("#help").dataset.topic = j.dataset.jump; const t = document.getElementById(j.dataset.jump); if (t) t.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
 });
 
 // ===================== 我想幫忙 =====================
@@ -1293,6 +1312,7 @@ function renderHelp() {
 }
 renderHelp();
 function openHelp(sec) {
+  $("#help").dataset.topic = sec || "h-goods";
   simpleCrumb($("#hcrumb"), "我想幫忙"); setView("help");
   if (sec) { const t = document.getElementById(sec); if (t) setTimeout(() => t.scrollIntoView(), 30); }
 }
