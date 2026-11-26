@@ -302,6 +302,29 @@ if (new URLSearchParams(location.search).get("palette") === "waterlily") {
 [data-palette="waterlily"] .cat:nth-child(2) {background:#eee1ef}
 [data-palette="waterlily"] .cat:nth-child(3) {background:#dcecdf}
 [data-palette="waterlily"] .giveband {background:linear-gradient(110deg,#cbe4d6,#e0ebdc 60%,#d6e5e9)}
+
+/* Soft pools of pigment over a fine, directional canvas grain. */
+[data-palette="waterlily"] .entries .entry,
+[data-palette="waterlily"] .hero .ask button {
+  --wash-base:#c8e3cd; --wash-light:#fff2bdbd; --wash-mid:#87cbbfa3; --wash-edge:#7599a5a8;
+  background-color:var(--wash-base);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='142' height='88'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.065 .38' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath d='M0 0h142v88H0z' filter='url(%23p)' opacity='.17'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 14% 2%,var(--wash-light),transparent 59%),
+    radial-gradient(ellipse at 78% 105%,var(--wash-edge),transparent 52%),
+    radial-gradient(ellipse at 86% 16%,var(--wash-mid),transparent 55%),
+    linear-gradient(153deg,transparent 41%,var(--wash-mid) 65%,transparent 84%);
+}
+[data-palette="waterlily"] .entries .entry:nth-child(2) {
+  --wash-base:#d0dced; --wash-light:#fff1d3bd; --wash-mid:#a4b6d6cf; --wash-edge:#af8abcbd;
+}
+[data-palette="waterlily"] .entries .entry.sos {
+  --wash-base:#eed3cc; --wash-light:#fff1c5d9; --wash-mid:#ddb1c3ce; --wash-edge:#c58a9ab5;
+}
+[data-palette="waterlily"] .hero .ask button {
+  --wash-base:#285650; --wash-light:#47725dab; --wash-mid:#316f72cf; --wash-edge:#493e69bf;
+  color:white;
+}
 </style>
 </head>
 <body>
