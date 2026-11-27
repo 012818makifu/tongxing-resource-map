@@ -364,7 +364,7 @@ if (new URLSearchParams(location.search).get("palette") === "waterlily") {
 @media(max-width:680px){[data-palette="sunrise"] #home .hero {--veil:linear-gradient(0deg,#fbefeef5 34%,#f9e7e8da 56%,transparent 89%)}}
 </style>
 <script>
-const glassStyle = new URLSearchParams(location.search).get("palette");
+const glassStyle = new URLSearchParams(location.search).get("palette") || "mist";
 if (glassStyle === "mist") {
   document.documentElement.dataset.typeface = "ming";
   const font = document.createElement("link");
@@ -414,6 +414,21 @@ if (glassStyle === "riverside" || glassStyle === "mist") {
 [data-typeface="ming"] #home .give-ways .way[data-sec="h-goods"]{background:#477e8699}
 [data-typeface="ming"] #home .give-ways .way[data-sec="h-money"]{background:#806138aa}
 [data-typeface="ming"] #home .give-ways .way[data-sec="h-vol"]{background:#77638999}
+</style>
+
+<style>
+html[data-typeface="ming"] :is(.card,.hcard,.rcard,.q,.sitc,.localbox,.maint,.mapbox,.empty,#repDlg,#home .cat,#home .film,#home .note,#home [aria-labelledby="reportTitle"]) {
+  background:rgba(255,255,255,.80);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border-color:rgba(255,255,255,.85);
+  box-shadow:inset 0 1px 2px white,0 4px 18px #1c31501a;
+}
+html[data-typeface="ming"] #help :is(.legend2,.hsec>h3,.hsec>.hint,.year,.year .m,.tips,footer){
+  color:#fbf9ff;text-shadow:0 1px 3px #172a48,0 0 5px #172a48;
+}
+html[data-typeface="ming"] #help .st {color:#fff;background:#32445e;text-shadow:none}
+html[data-typeface="ming"] #help .st-season {background:#694837}
+html[data-typeface="ming"] #help .st-always {background:#34574c}
 </style>
 </head>
 <body>
