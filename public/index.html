@@ -196,8 +196,8 @@ html.big .lbl{font-size:12px}
 /* 問答 */
 .qform{display:grid;gap:14px}
 .q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:grid;gap:10px;margin:0}
-.q legend{padding:0;font-weight:700;font-size:16px;display:flex;gap:10px;align-items:baseline}
-.q legend .e-k{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.q h3{margin:0;padding:0;font-weight:700;font-size:16px;display:flex;gap:10px;align-items:baseline}
+.q h3 .e-k{font-family:var(--mono);font-size:12px;color:var(--accent)}
 .q .sub{font-size:13px;color:var(--muted);margin:0}
 .opts{display:flex;flex-wrap:wrap;gap:8px}
 .opt{position:relative}
@@ -430,7 +430,14 @@ html[data-typeface="ming"] #help .st {color:#fff;background:#32445e;text-shadow:
 html[data-typeface="ming"] #help .st-season {background:#694837}
 html[data-typeface="ming"] #help .st-always {background:#34574c}
 </style>
-</head>
+<style>
+#quiz .qform,#quiz .q,#quiz .ask{min-width:0;box-sizing:border-box}
+#quiz .q{grid-template-columns:minmax(0,1fr)}
+#quiz .q select{max-width:100%}
+#quiz .ask input{min-width:0;width:0;flex:1}
+#quiz .ask button{flex:none}
+#agentStatus:empty{display:none}
+</style></head>
 <body>
 <div class="wrap">
   <!-- 頂部搜尋列（所有頁面共用） -->
@@ -534,9 +541,9 @@ html[data-typeface="ming"] #help .st-always {background:#34574c}
       <h2>資源查詢</h2>
       <p class="hint">描述孩子的情況，讓 AI 幫你填寫下方五題。你可以修改條件，也可以直接自己選。</p>
     </div>
-    <form class="qform" id="agent"><fieldset class="q"><legend>用一句話查詢</legend><label for="situation">描述行政區、孩子的年級與需要的幫助，請省略姓名和聯絡方式。</label><div class="ask"><input id="situation" required maxlength="500" placeholder="例如：住臺中北區，想找免費課輔"><button id="interpret">AI 查詢 →</button></div><p role="status" id="agentStatus"></p></fieldset></form>
+    <form class="qform" id="agent"><div class="q" role="group" aria-labelledby="quiz-title-1"><h3 id="quiz-title-1">用一句話查詢</h3><label for="situation">描述行政區、孩子的年級與需要的幫助，請省略姓名和聯絡方式。</label><div class="ask"><input id="situation" required maxlength="500" placeholder="例如：住臺中北區，想找免費課輔"><button id="interpret">AI 查詢 →</button></div><p role="status" id="agentStatus"></p></div></form>
     <form class="qform" id="qform">
-      <fieldset class="q"><legend><span class="e-k">01</span>住在哪裡？</legend>
+      <div class="q" role="group" aria-labelledby="quiz-title-2"><h3 id="quiz-title-2"><span class="e-k">01</span>住在哪裡？</h3>
         <div class="sel2">
           <label class="sr" for="qc" style="position:absolute;left:-9999px">縣市</label>
           <select id="qc"><option value="">選擇縣市（不確定可略過）</option></select>
@@ -544,20 +551,20 @@ html[data-typeface="ming"] #help .st-always {background:#34574c}
           <select id="qd" disabled><option value="">選擇行政區</option></select>
         </div>
         <p class="sub">戶籍和實際住處不同時，選孩子實際生活、上學的地方。</p>
-      </fieldset>
-      <fieldset class="q"><legend><span class="e-k">02</span>孩子現在是？</legend>
+      </div>
+      <div class="q" role="group" aria-labelledby="quiz-title-3"><h3 id="quiz-title-3"><span class="e-k">02</span>孩子現在是？</h3>
         <div class="opts" id="qa"></div>
-      </fieldset>
-      <fieldset class="q"><legend><span class="e-k">03</span>家裡的狀況（可複選）</legend>
+      </div>
+      <div class="q" role="group" aria-labelledby="quiz-title-4"><h3 id="quiz-title-4"><span class="e-k">03</span>家裡的狀況（可複選）</h3>
         <div class="opts" id="qs"></div>
         <p class="sub">低收入戶、中低收入戶是向公所申請核定的身分。沒有身分但生活困難，很多資源經學校老師或社工評估後也能使用。</p>
-      </fieldset>
-      <fieldset class="q"><legend><span class="e-k">04</span>需要哪方面的幫助？（可複選）</legend>
+      </div>
+      <div class="q" role="group" aria-labelledby="quiz-title-5"><h3 id="quiz-title-5"><span class="e-k">04</span>需要哪方面的幫助？（可複選）</h3>
         <div class="opts" id="qn"></div>
-      </fieldset>
-      <fieldset class="q"><legend><span class="e-k">05</span>什麼時候需要？</legend>
+      </div>
+      <div class="q" role="group" aria-labelledby="quiz-title-6"><h3 id="quiz-title-6"><span class="e-k">05</span>什麼時候需要？</h3>
         <div class="opts" id="qt"></div>
-      </fieldset>
+      </div>
       <button class="cta qsubmit" type="submit">看看我可以用的資源 <span aria-hidden="true">→</span></button>
     </form>
     <div class="qres" id="qres"></div>
